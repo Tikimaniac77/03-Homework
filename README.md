@@ -36,7 +36,7 @@ Download the repository when ready
 
 ## Credits
 
-[the url for my site is:](https://tikimaniac77.github.io/03-Homework/)
+[the url for the site is:](https://tikimaniac77.github.io/03-Homework/)
 
 ## License
 
