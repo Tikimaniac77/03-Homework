@@ -26,105 +26,105 @@ var numberCharacters = [
 // var hasSpecialCharacters  prompt, do you want special characters
 // prompt, do you want numbers
 
-​function getChoices() {
+function userChoices(){
   // prompt How many characters would you like your password to contain
   // Can't have less than 8 or more than 128
-  var passwordLength = parseInt(prompt(
+  var pwLength = parseInt(prompt(
     "How many characters would you like your password, pick a number between 8 and 128"
-  ), 10);
+  ));
 
-  if (Number.isNaN(passwordLength)) {
+  if (Number.isNaN(pwLength)) {
     alert("password length is required");
     return;
   }
-  if (passwordLength < 8) {
+  if (pwLength < 8) {
     alert("Password length must be at least 8 characters");
   }
-  if (passwordLength > 128) {
+  if (pwLength > 128) {
     alert("Password length can't be more than 128 characters");
   }
-​  var isSpecialCharacters = confirm("Click ok to include special characters as part of your password!");
+  var incSpecialCharacters = confirm("Click ok to include special characters as part of your password!");
 
-  var isNumbers = confirm("Click ok to include numbers as part of your password!");
+  var incNumbers = confirm("Click ok to include numbers as part of your password!");
 
-  var isLowerCase = confirm("Click ok to include lower case characters as part of your password!");
+  var incLowerCase = confirm("Click ok to include lower case characters as part of your password!");
 
-  var isUpperCase = confirm("Click ok to include uppercase characters as part of your password!");
+  var incUpperCase = confirm("Click ok to include uppercase characters as part of your password!");
 
-  if (!hasSpecialCharacters && !hasNumbers && !hasLowerCase && !hasUpperCase) {
+  if (!incSpecialCharacters && !incNumbers && !incLowerCase && !incUpperCase) {
     alert("Please select at least one character type");
     return;
   }
 
-​  var choices = {
-    length: passwordLength,
-    hasSpecialCharacters: isSpecialCharacters,
-    hasNumbers: isNumbers,
-    hasLowerCase: isLowerCase,
-    hasUpperCase: isUpperCase,
+  var choices = {
+    length: pwLength,
+    incSpecialCharacters: incSpecialCharacters,
+    incNumbers: incNumbers,
+    incLowerCase: incLowerCase,
+    incUpperCase: incUpperCase,
   };
-​  
+  
   return choices;
 };
-​
+
 function getRandomChar(array) {
     return array[Math.floor(Math.random() * array.length)];
   
 };
-​
+
 function generatePassword() {
   // guarantee at least one of each character that is selected for the password option
-  //  need an array for the final password
-  //  need an array for the guarantee characters
-  //  need an array for the possible characters
-  var choices = getChoices();
-​
+  
+  var choices = userChoices();
+
   var password = [];
-  var possibleCharacters = [];
-  var guaranteeCharacters = [];
-​
+  var allCharacters = [];
+  var chosenCharacters = [];
+
   // For every character type selected, need to concat the existing character arrays into the possible characters array.
-  if (choices.hasSpecialCharacters) {
-    possibleCharacters = possibleCharacters.concat(specialCharacters);
-    guaranteeCharacters.push(getRandomChar(specialCharacters));
+  if (choices.incSpecialCharacters) {
+    allCharacters = allCharacters.concat(specialCharacters);
+    chosenCharacters.push(getRandomChar(specialCharacters));
   }
 
-  if (choices.hasNumbers) {
-    possibleCharacters = possibleCharacters.concat(numberCharacters);
-    guaranteeCharacters.push(getRandomChar(numberCharacters));
+  if (choices.incNumbers) {
+    allCharacters = allCharacters.concat(numberCharacters);
+    chosenCharacters.push(getRandomChar(numberCharacters));
   }
 
-  if (choices.hasLowerCase) {
-    possibleCharacters = possibleCharacters.concat(lowerCasedCharacters);
-    guaranteeCharacters.push(getRandomChar(lowerCasedCharacters));
+  if (choices.incLowerCase) {
+    allCharacters = allCharacters.concat(lowerCasedCharacters);
+    chosenCharacters.push(getRandomChar(lowerCasedCharacters));
   }
 
-  if (choices.hasUpperCase) {
-    possibleCharacters = possibleCharacters.concat(upperCasedCharacters);
-    guaranteeCharacters.push(getRandomChar(upperCasedCharacters));
+  if (choices.incUpperCase) {
+    allCharacters = allCharacters.concat(upperCasedCharacters);
+    chosenCharacters.push(getRandomChar(upperCasedCharacters));
   }
 
-  password.concat(guaranteeCharacters);
+  
   //Array method that will merge all the elements of an array.
-  for (var i = 0; i < choices.length - guaranteeCharacters.length; i++) {
-    var characterResult = getRandomChar(possibleCharacters);
+  for (var i = 0; i < choices.length; i++) {
+    var characterResult = getRandomChar(allCharacters);
     password.push(characterResult);
   } 
-  return password.join('')
-
+  console.log(password);
+  return password.join('');
+  
 };
-​
+
 // Assignment Code
 var generateButton = document.querySelector("#generate");
-​
+
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
-​
+
   passwordText.value = password;
 };
-​
+
 // Add event listener to generate button
 generateButton.addEventListener("click", writePassword);
 console.log(writePassword);
+
